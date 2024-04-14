@@ -32,7 +32,7 @@ def main():
         outputs.append(output)
 
     with open(output_file, "w") as file:
-        json.dump(outputs, file)
+        json.dump(outputs, file, indent=2)
     return
 
 
