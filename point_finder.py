@@ -49,18 +49,22 @@ def find_intermediate_points(
     # This is the final return list
     satisfying_points: list[dict[str, Union[int, float]]] = []
 
-    # Calculate positions and add to the return list
-    start_count = 0
-    end_count = (
-        num_of_satisfying_points if not include_a else num_of_satisfying_points + 1
-    )
-    offset = 1 if not include_a else 0
+    # Whether add A to the final return list or not
+    if include_a:
+        satisfying_points.append(
+            {
+                "id": len(satisfying_points),
+                "x": a_position[0],
+                "y": a_position[1],
+            }
+        )
 
-    for i in range(start_count, end_count):
+    # Add all satisfying points to the return list
+    for i in range(1, num_of_satisfying_points + 1):
         new_satisfying_point = {
-            "id": i,
-            "x": a_position[0] + (i + offset) * scaled_vector[0],
-            "y": a_position[1] + (i + offset) * scaled_vector[1],
+            "id": len(satisfying_points),
+            "x": a_position[0] + i * scaled_vector[0],
+            "y": a_position[1] + i * scaled_vector[1],
         }
         satisfying_points.append(new_satisfying_point)
 
@@ -71,7 +75,7 @@ def find_intermediate_points(
     ):
         satisfying_points.append(
             {
-                "id": end_count,
+                "id": len(satisfying_points),
                 "x": b_position[0],
                 "y": b_position[1],
             }
