@@ -144,7 +144,38 @@ class TestFindIntermediatePoints(unittest.TestCase):
 
     # NOTE: Write more test with float vector and float distance
     def test_float(self):
-        return
+        a = (0, 0)
+        b = (5.5, 5.5)
+        distance = 1.4142135623730951
+        result = find_intermediate_points(a, b, distance)
+        expected_result = [
+            {
+                "id": 0,
+                "x": 1.0,
+                "y": 1.0,
+            },
+            {
+                "id": 1,
+                "x": 2.0,
+                "y": 2.0,
+            },
+            {
+                "id": 2,
+                "x": 3.0,
+                "y": 3.0,
+            },
+            {
+                "id": 3,
+                "x": 4.0,
+                "y": 4.0,
+            },
+            {
+                "id": 4,
+                "x": 5.0,
+                "y": 5.0,
+            },
+        ]
+        self.assertEqual(result, expected_result)
 
 
 if __name__ == "__main__":
