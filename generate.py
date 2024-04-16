@@ -1,8 +1,10 @@
 from point_finder import find_intermediate_points
+from math import sqrt
 import json
 
 INPUT_FILE_PATH = "/home/sdv/py_test/depends/NODE.json"
-DISTANCE = 1.5
+DISTANCE = 1.5  # Desired distance between points
+MIN_DISTANCE = 0.5  # Min distance between points (specially the last intermediate point and point B)
 
 
 def main():
@@ -45,13 +47,25 @@ def main():
     ):
         del satisfying_points[-1]
 
+    # If the last point is too close to point B (< MIN_DISTANCE)
+    # remove that point
+    last_satisfying_point = satisfying_points[-1]
+    if (
+        sqrt(
+            (point_b["x"] - last_satisfying_point["x"]) ** 2
+            + (point_b["y"] - last_satisfying_point["y"]) ** 2
+        )
+        <= MIN_DISTANCE
+    ):
+        satisfying_points.remove(last_satisfying_point)
+
     # Format the output JSON
     list_of_output_points = []
     for point in satisfying_points:
         output_points = {
             "id": point_a_id + point_b_id + str(point["id"]),
-            "x": point["x"],
-            "y": point["y"],
+            "x": round(point["x"], 3),  # Only take 3 digits after the comma
+            "y": round(point["y"], 3),  # Only take 3 digits after the comm
             "yaw": "None",
             "collision": "N",
         }
